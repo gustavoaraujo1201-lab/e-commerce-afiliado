@@ -8,6 +8,8 @@ const produtos = [
     categoria: "saude",
     desc: "Proteína de alta qualidade para ganho de massa muscular. 30g de proteína por dose, sem lactose.",
     emoji: "💪",
+    // ⬇️ COLE AQUI A URL DA IMAGEM DO PRODUTO (copie o link da foto na Amazon/ML)
+    img: "",
     preco: "R$89,90",
     precoOld: "R$129,90",
     desconto: "-31%",
@@ -20,11 +22,11 @@ const produtos = [
     categoria: "eletronicos",
     desc: "Som estéreo de alta fidelidade, 30h de bateria, cancelamento de ruído e design premium.",
     emoji: "🎧",
+    img: "",
     preco: "R$149,90",
     precoOld: "R$199,90",
     desconto: "-25%",
     loja: "shopee",
-    // ⬇️ COLOQUE SEU LINK DE AFILIADO DA SHOPEE AQUI
     link: "https://shopee.com.br/SEU_LINK_AFILIADO_AQUI"
   },
   {
@@ -33,6 +35,7 @@ const produtos = [
     categoria: "esporte",
     desc: "Monitor cardíaco, GPS, 7 dias de bateria, resistente à água. Compatível com Android e iOS.",
     emoji: "⌚",
+    img: "",
     preco: "R$199,90",
     precoOld: "R$299,90",
     desconto: "-33%",
@@ -45,11 +48,11 @@ const produtos = [
     categoria: "saude",
     desc: "Creatina pura para aumento de força e resistência muscular. Sem sabor, dissolve fácil.",
     emoji: "🏋️",
+    img: "",
     preco: "R$59,90",
     precoOld: "R$79,90",
     desconto: "-25%",
     loja: "shopee",
-    // ⬇️ COLOQUE SEU LINK DE AFILIADO DA SHOPEE AQUI
     link: "https://shopee.com.br/SEU_LINK_AFILIADO_AQUI"
   },
   {
@@ -58,6 +61,7 @@ const produtos = [
     categoria: "beleza",
     desc: "Sérum + hidratante + protetor solar com vitamina C. Uniformiza o tom e ilumina a pele.",
     emoji: "✨",
+    img: "",
     preco: "R$79,90",
     precoOld: "R$119,90",
     desconto: "-33%",
@@ -70,6 +74,7 @@ const produtos = [
     categoria: "casa",
     desc: "Fritadeira sem óleo com display digital, 8 funções, frituras crocantes com até 80% menos gordura.",
     emoji: "🍳",
+    img: "",
     preco: "R$299,90",
     precoOld: "R$449,90",
     desconto: "-33%",
@@ -82,11 +87,11 @@ const produtos = [
     categoria: "casa",
     desc: "Resolução Full HD, visão noturna, detecção de movimento e acesso pelo celular em tempo real.",
     emoji: "📷",
+    img: "",
     preco: "R$119,90",
     precoOld: "R$179,90",
     desconto: "-33%",
     loja: "shopee",
-    // ⬇️ COLOQUE SEU LINK DE AFILIADO DA SHOPEE AQUI
     link: "https://shopee.com.br/SEU_LINK_AFILIADO_AQUI"
   },
   {
@@ -95,6 +100,7 @@ const produtos = [
     categoria: "saude",
     desc: "Alta concentração de EPA e DHA, auxilia na saúde cardiovascular e reduz inflamações.",
     emoji: "🐟",
+    img: "",
     preco: "R$44,90",
     precoOld: "R$69,90",
     desconto: "-36%",
@@ -123,6 +129,22 @@ function catName(c) {
   return m[c] || c;
 }
 
+function productThumb(p) {
+  if (p.img) {
+    return `<img src="${p.img}" alt="${p.nome}" style="width:100%;height:100%;object-fit:contain;border-radius:8px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span style="display:none;font-size:56px;align-items:center;justify-content:center;width:100%;height:100%">${p.emoji}</span>`;
+  }
+  return `<span style="font-size:56px">${p.emoji}</span>`;
+}
+
+function productModalThumb(p) {
+  if (p.img) {
+    return `<img src="${p.img}" alt="${p.nome}" style="width:100%;height:100%;object-fit:contain;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span style="display:none;font-size:72px;align-items:center;justify-content:center;width:100%;height:100%">${p.emoji}</span>`;
+  }
+  return `<span style="font-size:72px">${p.emoji}</span>`;
+}
+
 function renderProducts(list) {
   const grid = document.getElementById("productsGrid");
 
@@ -134,7 +156,7 @@ function renderProducts(list) {
   grid.innerHTML = list.map(p => `
     <div class="product-card" onclick="openModal(${p.id})">
       <div class="product-img">
-        <span>${p.emoji}</span>
+        ${productThumb(p)}
         <span class="product-store-tag tag-${p.loja}">
           ${p.loja === 'ml' ? 'Mercado Livre' : p.loja.charAt(0).toUpperCase() + p.loja.slice(1)}
         </span>
@@ -205,7 +227,7 @@ function openModal(id) {
 
   document.getElementById('modalImg').innerHTML = `
     <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    <span style="font-size:72px">${p.emoji}</span>
+    ${productModalThumb(p)}
   `;
   document.getElementById('modalCat').textContent      = catName(p.categoria);
   document.getElementById('modalName').textContent     = p.nome;
