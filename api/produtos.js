@@ -1,44 +1,64 @@
 // ============================================================
 // Vercel Function — /api/produtos
-// Busca dados dos produtos na API do Mercado Livre e
-// monta os links de afiliado com suas credenciais.
+// Busca dados dos produtos na API do Mercado Livre com
+// autenticação via Client Credentials.
 // ============================================================
 
-const MATT_TOOL = "45522444";
-const MATT_WORD = "gustavoaraujo12";
+const ML_CLIENT_ID     = "7877608430424687";
+const ML_CLIENT_SECRET = "rtHIlsg8aLMq8hfBEnjJOSXiFrIA1nZX";
+const MATT_TOOL        = "45522444";
+const MATT_WORD        = "gustavoaraujo12";
 
 // ── Produtos curados por você ──────────────────────────────
-// mlbId    → ID do produto (MLB...) — obrigatório
-// categoria → "fitness" | "beleza" | "pet" — obrigatório
-// desc     → descrição curta para o card — OPCIONAL
-//            Se não preencher, usa o título do anúncio do ML.
-//
-// ⚠️  IMPORTANTE: use sempre o ID que aparece em &wid= na URL do produto,
-//     NÃO o que aparece em /p/MLB...
-//
-// ✅ Com descrição manual:
-//   { mlbId: "MLB3912996147", categoria: "beleza", desc: "Kit skincare completo da Principia." },
-//
-// ✅ Sem descrição (usa o título do ML):
-//   { mlbId: "MLB3912996147", categoria: "beleza" },
-//
+// mlbId    → ID do produto — use o &wid= da URL do produto
+// categoria → "fitness" | "beleza" | "pet"
+// desc     → descrição opcional. Se vazio, usa o título do ML.
 const PRODUTOS_CURADOS = [
   { mlbId: "MLB3912996147", categoria: "beleza", desc: "" },
-  // Adicione mais produtos abaixo:
   // { mlbId: "MLB0000000000", categoria: "fitness", desc: "" },
   // { mlbId: "MLB0000000000", categoria: "pet",     desc: "" },
 ];
 // ──────────────────────────────────────────────────────────
 
+// Cache do token em memória (válido por ~6h)
+let cachedToken = null;
+let tokenExpiry = 0;
+
+async function getAccessToken() {
+  if (cachedToken && Date.now() < tokenExpiry) return cachedToken;
+
+  const res = await fetch("https://api.mercadolibre.com/oauth/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type:    "client_credentials",
+      client_id:     ML_CLIENT_ID,
+      client_secret: ML_CLIENT_SECRET
+    })
+  });
+
+  if (!res.ok) throw new Error(`Erro ao obter token: ${res.status}`);
+
+  const data = await res.json();
+  cachedToken = data.access_token;
+  tokenExpiry = Date.now() + (data.expires_in - 300) * 1000;
+  return cachedToken;
+}
+
 function buildAffiliateLink(mlbId) {
   return `https://www.mercadolivre.com.br/p/${mlbId}?matt_tool=${MATT_TOOL}&matt_word=${MATT_WORD}`;
 }
 
-function formatPrice(cents) {
-  return "R$" + Number(cents).toLocaleString("pt-BR", {
+function formatPrice(value) {
+  return "R$" + Number(value).toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
+}
+
+function catEmoji(cat) {
+  const m = { fitness: "🏋️", beleza: "💄", pet: "🐾" };
+  return m[cat] || "🛒";
 }
 
 export default async function handler(req, res) {
@@ -50,10 +70,15 @@ export default async function handler(req, res) {
   }
 
   try {
+    const token = await getAccessToken();
+
     const resultados = await Promise.allSettled(
       PRODUTOS_CURADOS.map(async ({ mlbId, categoria, desc }) => {
         const r = await fetch(`https://api.mercadolibre.com/items/${mlbId}`, {
-          headers: { "Accept": "application/json" }
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json"
+          }
         });
 
         if (!r.ok) throw new Error(`Produto ${mlbId} retornou ${r.status}`);
@@ -94,17 +119,12 @@ export default async function handler(req, res) {
 
     resultados
       .filter(r => r.status === "rejected")
-      .forEach(r => console.error("[produtos] Erro:", r.reason));
+      .forEach(r => console.error("[produtos] Erro:", r.reason?.message));
 
     return res.status(200).json({ produtos });
 
   } catch (err) {
-    console.error("[produtos] Erro geral:", err);
+    console.error("[produtos] Erro geral:", err.message);
     return res.status(500).json({ error: "Erro ao buscar produtos" });
   }
-}
-
-function catEmoji(cat) {
-  const m = { fitness: "🏋️", beleza: "💄", pet: "🐾" };
-  return m[cat] || "🛒";
 }
