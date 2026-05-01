@@ -12,8 +12,7 @@ const produtos = [
     precoOld: "R$129,90",
     desconto: "-31%",
     loja: "ml",
-    // ⬇️ COLOQUE SEU LINK DE AFILIADO DO MERCADO LIVRE AQUI
-    link: "https://www.mercadolivre.com.br/SEU_LINK_AFILIADO_AQUI"
+    link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
   },
   {
     id: 2,
@@ -38,8 +37,7 @@ const produtos = [
     precoOld: "R$299,90",
     desconto: "-33%",
     loja: "amazon",
-    // ⬇️ COLOQUE SEU LINK DE AFILIADO DA AMAZON AQUI
-    link: "https://www.amazon.com.br/SEU_LINK_AFILIADO_AQUI"
+    link: "https://amzn.to/4esgWw9"
   },
   {
     id: 4,
@@ -51,6 +49,7 @@ const produtos = [
     precoOld: "R$79,90",
     desconto: "-25%",
     loja: "shopee",
+    // ⬇️ COLOQUE SEU LINK DE AFILIADO DA SHOPEE AQUI
     link: "https://shopee.com.br/SEU_LINK_AFILIADO_AQUI"
   },
   {
@@ -63,7 +62,7 @@ const produtos = [
     precoOld: "R$119,90",
     desconto: "-33%",
     loja: "amazon",
-    link: "https://www.amazon.com.br/SEU_LINK_AFILIADO_AQUI"
+    link: "https://amzn.to/4esgWw9"
   },
   {
     id: 6,
@@ -75,7 +74,7 @@ const produtos = [
     precoOld: "R$449,90",
     desconto: "-33%",
     loja: "ml",
-    link: "https://www.mercadolivre.com.br/SEU_LINK_AFILIADO_AQUI"
+    link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
   },
   {
     id: 7,
@@ -87,6 +86,7 @@ const produtos = [
     precoOld: "R$179,90",
     desconto: "-33%",
     loja: "shopee",
+    // ⬇️ COLOQUE SEU LINK DE AFILIADO DA SHOPEE AQUI
     link: "https://shopee.com.br/SEU_LINK_AFILIADO_AQUI"
   },
   {
@@ -99,7 +99,7 @@ const produtos = [
     precoOld: "R$69,90",
     desconto: "-36%",
     loja: "amazon",
-    link: "https://www.amazon.com.br/SEU_LINK_AFILIADO_AQUI"
+    link: "https://amzn.to/4esgWw9"
   }
 ];
 // ============================================================
