@@ -2,107 +2,113 @@
 // SEUS PRODUTOS — edite aqui para adicionar seus links de afiliado
 // ============================================================
 const produtos = [
+  // ── FITNESS EM CASA ──────────────────────────────────────
   {
     id: 1,
-    nome: "Whey Protein Isolado 900g",
-    categoria: "saude",
-    desc: "Proteína de alta qualidade para ganho de massa muscular. 30g de proteína por dose, sem lactose.",
-    emoji: "💪",
-    // ⬇️ COLE AQUI A URL DA IMAGEM DO PRODUTO (copie o link da foto na Amazon/ML)
+    nome: "Kit Elástico de Musculação 5 Níveis",
+    categoria: "fitness",
+    desc: "Conjunto com 5 faixas de resistência progressiva para treino completo em casa. Substitui academia com muito menos custo.",
+    emoji: "🏋️",
     img: "",
-    preco: "R$89,90",
-    precoOld: "R$129,90",
-    desconto: "-31%",
-    loja: "ml",
-    link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
+    preco: "R$49,90",
+    precoOld: "R$89,90",
+    desconto: "-44%",
+    loja: "amazon",
+    // ⬇️ Gere o link no SiteStripe da Amazon e cole aqui
+    link: "https://amzn.to/4esgWw9"
   },
   {
     id: 2,
-    nome: "Fone Bluetooth 5.0 Premium",
-    categoria: "eletronicos",
-    desc: "Som estéreo de alta fidelidade, 30h de bateria, cancelamento de ruído e design premium.",
-    emoji: "🎧",
+    nome: "Tapete de Yoga Antiderrapante 6mm",
+    categoria: "fitness",
+    desc: "Tapete premium para yoga, pilates e alongamento. Material ecológico, superfície antiderrapante e fácil de limpar.",
+    emoji: "🧘",
     img: "",
-    preco: "R$149,90",
-    precoOld: "R$199,90",
-    desconto: "-25%",
-    loja: "shopee",
-    link: "https://shopee.com.br/SEU_LINK_AFILIADO_AQUI"
+    preco: "R$79,90",
+    precoOld: "R$129,90",
+    desconto: "-38%",
+    loja: "ml",
+    // ⬇️ Gere o link no painel de afiliados do ML e cole aqui
+    link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
   },
   {
     id: 3,
-    nome: "Smartwatch Fit Pro",
-    categoria: "esporte",
-    desc: "Monitor cardíaco, GPS, 7 dias de bateria, resistente à água. Compatível com Android e iOS.",
-    emoji: "⌚",
+    nome: "Corda de Pular Speed Profissional",
+    categoria: "fitness",
+    desc: "Corda com rolamento de alta velocidade, cabo de aço revestido e alças ergonômicas. Ideal para cardio e emagrecimento.",
+    emoji: "🪢",
     img: "",
-    preco: "R$199,90",
-    precoOld: "R$299,90",
-    desconto: "-33%",
+    preco: "R$39,90",
+    precoOld: "R$69,90",
+    desconto: "-43%",
     loja: "amazon",
     link: "https://amzn.to/4esgWw9"
   },
+
+  // ── BELEZA & SKINCARE ────────────────────────────────────
   {
     id: 4,
-    nome: "Creatina Monohidratada 300g",
-    categoria: "saude",
-    desc: "Creatina pura para aumento de força e resistência muscular. Sem sabor, dissolve fácil.",
-    emoji: "🏋️",
+    nome: "Sérum Vitamina C Facial 30ml",
+    categoria: "beleza",
+    desc: "Sérum concentrado com vitamina C 20%, ácido hialurônico e niacinamida. Ilumina, uniformiza e reduz manchas em 2 semanas.",
+    emoji: "✨",
     img: "",
     preco: "R$59,90",
-    precoOld: "R$79,90",
-    desconto: "-25%",
-    loja: "shopee",
-    link: "https://shopee.com.br/SEU_LINK_AFILIADO_AQUI"
+    precoOld: "R$99,90",
+    desconto: "-40%",
+    loja: "amazon",
+    link: "https://amzn.to/4esgWw9"
   },
   {
     id: 5,
-    nome: "Kit Skincare Vitamina C",
+    nome: "Kit Skincare Coreano 5 Passos",
     categoria: "beleza",
-    desc: "Sérum + hidratante + protetor solar com vitamina C. Uniformiza o tom e ilumina a pele.",
-    emoji: "✨",
+    desc: "Rotina completa com tônico, essência, sérum, hidratante e protetor solar. Pele visivelmente transformada em 30 dias.",
+    emoji: "🌸",
     img: "",
-    preco: "R$79,90",
-    precoOld: "R$119,90",
-    desconto: "-33%",
-    loja: "amazon",
-    link: "https://amzn.to/4esgWw9"
-  },
-  {
-    id: 6,
-    nome: "Airfryer Digital 5L",
-    categoria: "casa",
-    desc: "Fritadeira sem óleo com display digital, 8 funções, frituras crocantes com até 80% menos gordura.",
-    emoji: "🍳",
-    img: "",
-    preco: "R$299,90",
-    precoOld: "R$449,90",
-    desconto: "-33%",
+    preco: "R$89,90",
+    precoOld: "R$149,90",
+    desconto: "-40%",
     loja: "ml",
     link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
   },
   {
-    id: 7,
-    nome: "Câmera de Segurança WiFi",
-    categoria: "casa",
-    desc: "Resolução Full HD, visão noturna, detecção de movimento e acesso pelo celular em tempo real.",
-    emoji: "📷",
+    id: 6,
+    nome: "Máscara Capilar Hidratação Intensa 500g",
+    categoria: "beleza",
+    desc: "Máscara de nutrição profunda para cabelos secos e danificados. Com keratina e óleo de argan. Resultado de salão em casa.",
+    emoji: "💆",
     img: "",
-    preco: "R$119,90",
-    precoOld: "R$179,90",
-    desconto: "-33%",
-    loja: "shopee",
-    link: "https://shopee.com.br/SEU_LINK_AFILIADO_AQUI"
+    preco: "R$44,90",
+    precoOld: "R$74,90",
+    desconto: "-40%",
+    loja: "amazon",
+    link: "https://amzn.to/4esgWw9"
+  },
+
+  // ── PET ──────────────────────────────────────────────────
+  {
+    id: 7,
+    nome: "Caminha Pet Luxo Tamanho M",
+    categoria: "pet",
+    desc: "Cama macia e confortável para cães e gatos de até 10kg. Material lavável, antialérgico e base antiderrapante.",
+    emoji: "🐾",
+    img: "",
+    preco: "R$79,90",
+    precoOld: "R$129,90",
+    desconto: "-38%",
+    loja: "ml",
+    link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
   },
   {
     id: 8,
-    nome: "Suplemento Ômega 3 120 cáps",
-    categoria: "saude",
-    desc: "Alta concentração de EPA e DHA, auxilia na saúde cardiovascular e reduz inflamações.",
-    emoji: "🐟",
+    nome: "Kit Petisco Natural para Cães 3 Sabores",
+    categoria: "pet",
+    desc: "Snacks saudáveis sem corantes ou conservantes. Frango, carne e fígado. Ideal para adestramento e recompensa.",
+    emoji: "🦴",
     img: "",
-    preco: "R$44,90",
-    precoOld: "R$69,90",
+    preco: "R$34,90",
+    precoOld: "R$54,90",
     desconto: "-36%",
     loja: "amazon",
     link: "https://amzn.to/4esgWw9"
@@ -120,11 +126,9 @@ let currentCat = "todos";
 
 function catName(c) {
   const m = {
-    saude:      "💊 Saúde",
-    eletronicos:"📱 Eletrônicos",
-    casa:       "🏠 Casa",
-    esporte:    "🏋️ Esporte",
-    beleza:     "💄 Beleza"
+    fitness: "🏋️ Fitness",
+    beleza:  "💄 Beleza",
+    pet:     "🐾 Pet"
   };
   return m[c] || c;
 }
