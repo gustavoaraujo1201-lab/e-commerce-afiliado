@@ -1,49 +1,18 @@
 // ============================================================
 // Vercel Function — /api/produtos
-// Busca dados dos produtos na API do Mercado Livre com
-// autenticação via Client Credentials.
 // ============================================================
 
-const ML_CLIENT_ID     = "7877608430424687";
-const ML_CLIENT_SECRET = "rtHIlsg8aLMq8hfBEnjJOSXiFrIA1nZX";
-const MATT_TOOL        = "45522444";
-const MATT_WORD        = "gustavoaraujo12";
+const MATT_TOOL = "45522444";
+const MATT_WORD = "gustavoaraujo12";
 
 // ── Produtos curados por você ──────────────────────────────
-// mlbId    → ID do produto — use o &wid= da URL do produto
-// categoria → "fitness" | "beleza" | "pet"
-// desc     → descrição opcional. Se vazio, usa o título do ML.
+// Use o ID do CATÁLOGO — o MLB que aparece em /p/MLB... na URL
+// NÃO use o &wid= (esse é o anúncio do vendedor, privado)
 const PRODUTOS_CURADOS = [
-  { mlbId: "MLB3912996147", categoria: "beleza", desc: "" },
-  // { mlbId: "MLB0000000000", categoria: "fitness", desc: "" },
-  // { mlbId: "MLB0000000000", categoria: "pet",     desc: "" },
+  { mlbId: "MLB43444252", categoria: "beleza", desc: "" },
+  // { mlbId: "MLB00000000", categoria: "fitness", desc: "" },
 ];
 // ──────────────────────────────────────────────────────────
-
-// Cache do token em memória (válido por ~6h)
-let cachedToken = null;
-let tokenExpiry = 0;
-
-async function getAccessToken() {
-  if (cachedToken && Date.now() < tokenExpiry) return cachedToken;
-
-  const res = await fetch("https://api.mercadolibre.com/oauth/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      grant_type:    "client_credentials",
-      client_id:     ML_CLIENT_ID,
-      client_secret: ML_CLIENT_SECRET
-    })
-  });
-
-  if (!res.ok) throw new Error(`Erro ao obter token: ${res.status}`);
-
-  const data = await res.json();
-  cachedToken = data.access_token;
-  tokenExpiry = Date.now() + (data.expires_in - 300) * 1000;
-  return cachedToken;
-}
 
 function buildAffiliateLink(mlbId) {
   return `https://www.mercadolivre.com.br/p/${mlbId}?matt_tool=${MATT_TOOL}&matt_word=${MATT_WORD}`;
@@ -57,8 +26,7 @@ function formatPrice(value) {
 }
 
 function catEmoji(cat) {
-  const m = { fitness: "🏋️", beleza: "💄", pet: "🐾" };
-  return m[cat] || "🛒";
+  return { fitness: "🏋️", beleza: "💄", pet: "🐾" }[cat] || "🛒";
 }
 
 export default async function handler(req, res) {
@@ -70,45 +38,56 @@ export default async function handler(req, res) {
   }
 
   try {
-    const token = await getAccessToken();
-
     const resultados = await Promise.allSettled(
       PRODUTOS_CURADOS.map(async ({ mlbId, categoria, desc }) => {
-        const r = await fetch(`https://api.mercadolibre.com/items/${mlbId}`, {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/json"
-          }
+
+        // Busca o catálogo público (não precisa de token)
+        const r = await fetch(`https://api.mercadolibre.com/products/${mlbId}`, {
+          headers: { "Accept": "application/json" }
         });
 
         if (!r.ok) throw new Error(`Produto ${mlbId} retornou ${r.status}`);
-
         const d = await r.json();
 
-        const precoAtual    = d.price;
-        const precoOriginal = d.original_price || null;
-        const desconto = precoOriginal
-          ? `-${Math.round((1 - precoAtual / precoOriginal) * 100)}%`
-          : null;
+        // Busca o melhor preço do catálogo
+        const pr = await fetch(`https://api.mercadolibre.com/products/${mlbId}/items?limit=1`, {
+          headers: { "Accept": "application/json" }
+        });
 
-        const img = d.thumbnail
-          ? d.thumbnail.replace(/-I\.jpg$/, "-O.jpg")
-          : "";
+        let preco = null;
+        let precoOld = null;
+        let desconto = null;
+        let freeShipping = false;
+
+        if (pr.ok) {
+          const prData = await pr.json();
+          const item = prData.results?.[0];
+          if (item) {
+            preco       = item.price ? formatPrice(item.price) : null;
+            precoOld    = item.original_price ? formatPrice(item.original_price) : null;
+            desconto    = item.original_price
+              ? `-${Math.round((1 - item.price / item.original_price) * 100)}%`
+              : null;
+            freeShipping = item.shipping?.free_shipping ?? false;
+          }
+        }
+
+        const img = d.pictures?.[0]?.url || d.main_picture?.url || "";
 
         return {
-          id:           d.id,
-          nome:         d.title,
+          id:       mlbId,
+          nome:     d.name,
           categoria,
-          desc:         (desc && desc.trim()) ? desc.trim() : d.title,
-          emoji:        catEmoji(categoria),
+          desc:     (desc && desc.trim()) ? desc.trim() : d.name,
+          emoji:    catEmoji(categoria),
           img,
-          preco:        formatPrice(precoAtual),
-          precoOld:     precoOriginal ? formatPrice(precoOriginal) : null,
+          preco:    preco || "Ver preço",
+          precoOld,
           desconto,
-          loja:         "ml",
-          link:         buildAffiliateLink(d.id),
-          freeShipping: d.shipping?.free_shipping ?? false,
-          condicao:     d.condition === "new" ? "Novo" : "Usado"
+          loja:     "ml",
+          link:     buildAffiliateLink(mlbId),
+          freeShipping,
+          condicao: "Novo"
         };
       })
     );
