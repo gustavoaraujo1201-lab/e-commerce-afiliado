@@ -20,8 +20,8 @@ const MATT_WORD = "gustavoaraujo12";
 //   { mlbId: "MLB123", categoria: "fitness" },
 //
 const PRODUTOS_CURADOS = [
-  { mlbId: "MLB6655263510", categoria: "fitness", desc: "Produto selecionado com qualidade garantida e o melhor preço do Mercado Livre." },
-  // { mlbId: "MLB2222222222", categoria: "beleza",  desc: "" },
+  { mlbId: "MLB65929649", categoria: "fitness", desc: "Produto selecionado com qualidade garantida e o melhor preço do Mercado Livre." },
+  { mlbId: "MLB43444252", categoria: "beleza", desc: "" },
   // { mlbId: "MLB3333333333", categoria: "pet",     desc: "" },
 ];
 // ──────────────────────────────────────────────────────────
