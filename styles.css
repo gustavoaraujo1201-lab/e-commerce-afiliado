@@ -979,3 +979,36 @@ footer {
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* ════════════════════════════════
+   SKELETON LOADER
+════════════════════════════════ */
+.skeleton {
+  background: linear-gradient(90deg, var(--dark3) 25%, var(--dark4) 50%, var(--dark3) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-card { pointer-events: none; }
+.skeleton-img  { height: 180px; border-radius: var(--radius) var(--radius) 0 0; }
+.skeleton-line        { height: 14px; margin-bottom: 10px; }
+.skeleton-line.short  { width: 50%; }
+.skeleton-line.medium { width: 75%; }
+
+/* Tag frete grátis */
+.free-shipping-tag {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0,200,83,0.15);
+  border: 1px solid rgba(0,200,83,0.35);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
