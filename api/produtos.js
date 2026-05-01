@@ -8,13 +8,21 @@ const MATT_TOOL = "45522444";
 const MATT_WORD = "gustavoaraujo12";
 
 // ── Produtos curados por você ──────────────────────────────
-// Adicione/remova IDs de produtos do ML aqui.
-// Para achar o ID: abra o produto no ML e copie o código MLB...
-// da URL ou do link gerado no Gerador de Links do painel.
+// mlbId    → ID do produto (MLB...) — obrigatório
+// categoria → "fitness" | "beleza" | "pet" — obrigatório
+// desc     → descrição curta para o card — OPCIONAL
+//            Se não preencher, usa o título do anúncio do ML.
+//
+// ✅ Com descrição manual (mais persuasiva):
+//   { mlbId: "MLB123", categoria: "fitness", desc: "Kit com 5 faixas de resistência. Treino completo em casa!" },
+//
+// ✅ Sem descrição (usa o título do ML automaticamente):
+//   { mlbId: "MLB123", categoria: "fitness" },
+//
 const PRODUTOS_CURADOS = [
-  { mlbId: "MLB6655263510", categoria: "fitness"  },
-  // { mlbId: "MLB2222222222", categoria: "beleza"   },
-  // { mlbId: "MLB3333333333", categoria: "pet"      },
+  { mlbId: "MLB6655263510", categoria: "fitness", desc: "Produto selecionado com qualidade garantida e o melhor preço do Mercado Livre." },
+  // { mlbId: "MLB2222222222", categoria: "beleza",  desc: "" },
+  // { mlbId: "MLB3333333333", categoria: "pet",     desc: "" },
 ];
 // ──────────────────────────────────────────────────────────
 
@@ -30,7 +38,6 @@ function formatPrice(cents) {
 }
 
 export default async function handler(req, res) {
-  // CORS — permite só o seu domínio em produção
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET");
 
@@ -39,9 +46,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Busca todos os produtos em paralelo na API pública do ML
     const resultados = await Promise.allSettled(
-      PRODUTOS_CURADOS.map(async ({ mlbId, categoria }) => {
+      PRODUTOS_CURADOS.map(async ({ mlbId, categoria, desc }) => {
         const r = await fetch(`https://api.mercadolibre.com/items/${mlbId}`, {
           headers: { "Accept": "application/json" }
         });
@@ -50,42 +56,39 @@ export default async function handler(req, res) {
 
         const d = await r.json();
 
-        // Calcula desconto
-        const precoAtual   = d.price;
+        const precoAtual    = d.price;
         const precoOriginal = d.original_price || null;
         const desconto = precoOriginal
           ? `-${Math.round((1 - precoAtual / precoOriginal) * 100)}%`
           : null;
 
-        // Pega a melhor imagem disponível
         const img = d.thumbnail
-          ? d.thumbnail.replace(/\-I\.jpg$/, "-O.jpg") // versão maior
+          ? d.thumbnail.replace(/-I\.jpg$/, "-O.jpg")
           : "";
 
         return {
-          id:        d.id,
-          nome:      d.title,
+          id:           d.id,
+          nome:         d.title,
           categoria,
-          desc:      d.title, // ML não retorna descrição curta — pode editar manualmente depois
-          emoji:     catEmoji(categoria),
+          // Se desc foi preenchida manualmente usa ela, senão usa o título do ML
+          desc:         (desc && desc.trim()) ? desc.trim() : d.title,
+          emoji:        catEmoji(categoria),
           img,
-          preco:     formatPrice(precoAtual),
-          precoOld:  precoOriginal ? formatPrice(precoOriginal) : null,
+          preco:        formatPrice(precoAtual),
+          precoOld:     precoOriginal ? formatPrice(precoOriginal) : null,
           desconto,
-          loja:      "ml",
-          link:      buildAffiliateLink(d.id),
+          loja:         "ml",
+          link:         buildAffiliateLink(d.id),
           freeShipping: d.shipping?.free_shipping ?? false,
-          condicao:  d.condition === "new" ? "Novo" : "Usado"
+          condicao:     d.condition === "new" ? "Novo" : "Usado"
         };
       })
     );
 
-    // Filtra só os que deram certo
     const produtos = resultados
       .filter(r => r.status === "fulfilled")
       .map(r => r.value);
 
-    // Log dos que falharam (aparece no dashboard da Vercel)
     resultados
       .filter(r => r.status === "rejected")
       .forEach(r => console.error("[produtos] Erro:", r.reason));
