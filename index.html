@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ═══════════════════════════════════════════
+       SEO PRIMÁRIO
+  ═══════════════════════════════════════════ -->
+  <title>MelhorOfertas — Produtos com até 40% OFF | Amazon, Shopee e Mercado Livre</title>
+  <meta name="description" content="Encontre os melhores produtos com descontos de até 40% nas maiores lojas do Brasil. Ofertas selecionadas da Amazon, Shopee e Mercado Livre atualizadas diariamente.">
+  <meta name="keywords" content="ofertas, promoções, descontos, amazon, shopee, mercado livre, produtos baratos, afiliados, melhores preços">
+  <meta name="author" content="MelhorOfertas">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://melherofertas.com.br/">
+
+  <!-- ═══════════════════════════════════════════
+       OPEN GRAPH (WhatsApp, Facebook, LinkedIn)
+  ═══════════════════════════════════════════ -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://melherofertas.com.br/">
+  <meta property="og:title" content="MelhorOfertas — Descontos de até 40% nas maiores lojas">
+  <meta property="og:description" content="Produtos selecionados com os melhores preços da Amazon, Shopee e Mercado Livre. Atualizados diariamente.">
+  <meta property="og:image" content="https://melherofertas.com.br/og-image.jpg">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="MelhorOfertas">
+
+  <!-- ═══════════════════════════════════════════
+       TWITTER CARD
+  ═══════════════════════════════════════════ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MelhorOfertas — Descontos de até 40%">
+  <meta name="twitter:description" content="Ofertas selecionadas da Amazon, Shopee e Mercado Livre.">
+  <meta name="twitter:image" content="https://melherofertas.com.br/og-image.jpg">
+
+  <!-- ═══════════════════════════════════════════
+       PERFORMANCE & PWA
+  ═══════════════════════════════════════════ -->
+  <meta name="theme-color" content="#0a0f0d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.mercadolivre.com.br">
+  <link rel="dns-prefetch" href="https://shopee.com.br">
+  <link rel="dns-prefetch" href="https://www.amazon.com.br">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- ═══════════════════════════════════════════
+       SCHEMA.ORG — Organização
+  ═══════════════════════════════════════════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "MelhorOfertas",
+    "url": "https://melherofertas.com.br",
+    "description": "Curadoria das melhores ofertas da Amazon, Shopee e Mercado Livre",
+    "sameAs": []
+  }
+  </script>
+
+  <!-- ═══════════════════════════════════════════
+       SCHEMA.ORG — WebSite com SearchAction
+  ═══════════════════════════════════════════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "MelhorOfertas",
+    "url": "https://melherofertas.com.br",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://melherofertas.com.br/?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- ═══════════════════════════════════════════
+       SCHEMA.ORG — ItemList de Produtos
+       (gerado dinamicamente pelo scripts.js)
+  ═══════════════════════════════════════════ -->
+  <script type="application/ld+json" id="schemaProducts"></script>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     HEADER
+════════════════════════════════════════ -->
+<header id="siteHeader">
+  <a class="logo" href="/" aria-label="MelhorOfertas — Página inicial">
+    Melhor<span>Ofertas</span>
+  </a>
+
+  <!-- Nav desktop -->
+  <nav aria-label="Categorias" class="nav-desktop">
+    <a class="active" onclick="filterCat('todos')" role="button" aria-current="page">Todos</a>
+    <a onclick="filterCat('saude')" role="button">Saúde</a>
+    <a onclick="filterCat('eletronicos')" role="button">Eletrônicos</a>
+    <a onclick="filterCat('casa')" role="button">Casa</a>
+    <a onclick="filterCat('esporte')" role="button">Esporte</a>
+    <a onclick="filterCat('beleza')" role="button">Beleza</a>
+  </nav>
+
+  <!-- Busca desktop -->
+  <div class="header-search" role="search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input
+      type="search"
+      placeholder="Buscar produto..."
+      id="searchInput"
+      oninput="searchProducts()"
+      aria-label="Buscar produtos"
+      autocomplete="off"
+    >
+  </div>
+
+  <!-- Botões mobile -->
+  <div class="header-mobile-actions">
+    <button class="btn-search-mobile" onclick="toggleMobileSearch()" aria-label="Buscar" aria-expanded="false" id="btnSearchMobile">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </button>
+    <button class="btn-hamburger" onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false" id="btnHamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Busca mobile expansível -->
+<div class="mobile-search-bar" id="mobileSearchBar" role="search" aria-hidden="true">
+  <div class="mobile-search-inner">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input
+      type="search"
+      placeholder="Buscar produto..."
+      id="searchInputMobile"
+      oninput="searchProductsMobile()"
+      aria-label="Buscar produtos"
+      autocomplete="off"
+    >
+    <button onclick="toggleMobileSearch()" aria-label="Fechar busca">✕</button>
+  </div>
+</div>
+
+<!-- Menu mobile drawer -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="toggleMobileMenu()"></div>
+<nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
+  <div class="mobile-nav-header">
+    <span class="logo">Melhor<span>Ofertas</span></span>
+    <button onclick="toggleMobileMenu()" aria-label="Fechar menu">✕</button>
+  </div>
+  <div class="mobile-nav-links">
+    <a onclick="filterCat('todos');toggleMobileMenu()" class="active">🏠 Todos os produtos</a>
+    <a onclick="filterCat('saude');toggleMobileMenu()">💊 Saúde</a>
+    <a onclick="filterCat('eletronicos');toggleMobileMenu()">📱 Eletrônicos</a>
+    <a onclick="filterCat('casa');toggleMobileMenu()">🏠 Casa</a>
+    <a onclick="filterCat('esporte');toggleMobileMenu()">🏋️ Esporte</a>
+    <a onclick="filterCat('beleza');toggleMobileMenu()">💄 Beleza</a>
+  </div>
+  <div class="mobile-nav-stores">
+    <div class="store-badge ml">Mercado Livre</div>
+    <div class="store-badge shopee">Shopee</div>
+    <div class="store-badge amazon">Amazon</div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section class="hero" aria-label="Destaque">
+  <div class="hero-content">
+    <div class="hero-badge" aria-label="Status: ofertas ao vivo">
+      ✦ Ofertas verificadas e atualizadas hoje
+    </div>
+    <h1>As melhores <em>ofertas</em><br>em um só lugar</h1>
+    <p>Produtos selecionados com qualidade garantida. Compare e compre nas maiores lojas do Brasil sem sair daqui.</p>
+    <div class="hero-stores">
+      <div class="store-badge ml">🛒 Mercado Livre</div>
+      <div class="store-badge shopee">🛍 Shopee</div>
+      <div class="store-badge amazon">📦 Amazon</div>
+    </div>
+  </div>
+
+  <div class="hero-side">
+    <div class="hero-featured" id="heroFeatured">
+      <!-- preenchido pelo JS -->
+    </div>
+    <div class="hero-mini-stats">
+      <div class="mini-stat">
+        <div class="mini-stat-num">500<span>+</span></div>
+        <div class="mini-stat-label">Produtos disponíveis</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">40<span>%</span></div>
+        <div class="mini-stat-label">Desconto máximo</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">3</div>
+        <div class="mini-stat-label">Lojas parceiras</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ════════════════════════════════════════
+     COMO FUNCIONA
+════════════════════════════════════════ -->
+<section class="section" aria-labelledby="howTitle">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title" id="howTitle">Como <span>funciona</span></h2>
+      <p class="section-sub">Simples, rápido e seguro</p>
+    </div>
+  </div>
+  <div class="how-grid">
+    <article class="how-card">
+      <div class="how-num">01</div>
+      <span class="how-icon" aria-hidden="true">🔍</span>
+      <h3 class="how-title">Encontre o produto</h3>
+      <p class="how-desc">Navegue pelas categorias ou use a busca para encontrar o que precisa.</p>
+    </article>
+    <article class="how-card">
+      <div class="how-num">02</div>
+      <span class="how-icon" aria-hidden="true">💡</span>
+      <h3 class="how-title">Compare preços</h3>
+      <p class="how-desc">Veja onde está mais barato: Mercado Livre, Shopee ou Amazon.</p>
+    </article>
+    <article class="how-card">
+      <div class="how-num">03</div>
+      <span class="how-icon" aria-hidden="true">🛒</span>
+      <h3 class="how-title">Clique e compre</h3>
+      <p class="how-desc">Você é direcionado direto para a loja parceira com o melhor preço.</p>
+    </article>
+    <article class="how-card">
+      <div class="how-num">04</div>
+      <span class="how-icon" aria-hidden="true">🚚</span>
+      <h3 class="how-title">Receba em casa</h3>
+      <p class="how-desc">A loja cuida do pagamento, entrega e suporte. Você só aproveita!</p>
+    </article>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ════════════════════════════════════════
+     PRODUTOS
+════════════════════════════════════════ -->
+<section class="section" aria-labelledby="productsTitle">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title" id="productsTitle">Produtos em <span>destaque</span></h2>
+      <p class="section-sub">Atualizado diariamente com as melhores ofertas</p>
+    </div>
+    <span class="products-count" id="productsCount" aria-live="polite"></span>
+  </div>
+
+  <!-- Filtros por categoria -->
+  <div class="categories" id="categorias" role="group" aria-label="Filtrar por categoria">
+    <button class="cat-btn active" onclick="filterCat('todos')" aria-pressed="true">Todos</button>
+    <button class="cat-btn" onclick="filterCat('saude')" aria-pressed="false">💊 Saúde</button>
+    <button class="cat-btn" onclick="filterCat('eletronicos')" aria-pressed="false">📱 Eletrônicos</button>
+    <button class="cat-btn" onclick="filterCat('casa')" aria-pressed="false">🏠 Casa</button>
+    <button class="cat-btn" onclick="filterCat('esporte')" aria-pressed="false">🏋️ Esporte</button>
+    <button class="cat-btn" onclick="filterCat('beleza')" aria-pressed="false">💄 Beleza</button>
+  </div>
+
+  <!-- Grid de produtos -->
+  <div class="products-grid" id="productsGrid" role="list" aria-label="Lista de produtos"></div>
+</section>
+
+<hr class="divider">
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <div class="footer-left">
+    <a class="footer-logo" href="/" aria-label="MelhorOfertas">Melhor<span>Ofertas</span></a>
+    <p class="footer-note">
+      Site parceiro das maiores lojas do Brasil. Quando você compra pelos nossos links,
+      recebemos uma pequena comissão sem custo extra para você.
+    </p>
+  </div>
+  <div class="footer-right">
+    <div class="footer-stores">
+      <div class="store-badge ml">Mercado Livre</div>
+      <div class="store-badge shopee">Shopee</div>
+      <div class="store-badge amazon">Amazon</div>
+    </div>
+    <p class="footer-copy">© 2026 MelhorOfertas · Todos os direitos reservados</p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════
+     MODAL DE PRODUTO
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal" id="modal">
+    <div class="modal-img" id="modalImg">
+      <button class="modal-close" onclick="closeModalDirect()" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-price-wrap">
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-price-old" id="modalPriceOld"></div>
+        <div class="modal-discount" id="modalDiscount"></div>
+      </div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     TOAST
+════════════════════════════════════════ -->
+<div class="toast" id="toast" role="status" aria-live="polite">🔗 Abrindo loja parceira...</div>
+
+<!-- ════════════════════════════════════════
+     BOTÃO VOLTAR AO TOPO (mobile)
+════════════════════════════════════════ -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+</button>
+
+<script src="scripts.js"></script>
+</body>
+</html>
