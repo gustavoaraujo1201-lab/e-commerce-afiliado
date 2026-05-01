@@ -3,20 +3,7 @@
 // ============================================================
 const produtos = [
   // ── FITNESS EM CASA ──────────────────────────────────────
-  {
-    id: 1,
-    nome: "Kit Elástico de Musculação 5 Níveis",
-    categoria: "fitness",
-    desc: "Conjunto com 5 faixas de resistência progressiva para treino completo em casa. Substitui academia com muito menos custo.",
-    emoji: "🏋️",
-    img: "",
-    preco: "R$49,90",
-    precoOld: "R$89,90",
-    desconto: "-44%",
-    loja: "amazon",
-    // ⬇️ Gere o link no SiteStripe da Amazon e cole aqui
-    link: "https://amzn.to/4esgWw9"
-  },
+
   {
     id: 2,
     nome: "Tapete de Yoga Antiderrapante 6mm",
@@ -31,34 +18,10 @@ const produtos = [
     // ⬇️ Gere o link no painel de afiliados do ML e cole aqui
     link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
   },
-  {
-    id: 3,
-    nome: "Corda de Pular Speed Profissional",
-    categoria: "fitness",
-    desc: "Corda com rolamento de alta velocidade, cabo de aço revestido e alças ergonômicas. Ideal para cardio e emagrecimento.",
-    emoji: "🪢",
-    img: "",
-    preco: "R$39,90",
-    precoOld: "R$69,90",
-    desconto: "-43%",
-    loja: "amazon",
-    link: "https://amzn.to/4esgWw9"
-  },
+
 
   // ── BELEZA & SKINCARE ────────────────────────────────────
-  {
-    id: 4,
-    nome: "Sérum Vitamina C Facial 30ml",
-    categoria: "beleza",
-    desc: "Sérum concentrado com vitamina C 20%, ácido hialurônico e niacinamida. Ilumina, uniformiza e reduz manchas em 2 semanas.",
-    emoji: "✨",
-    img: "",
-    preco: "R$59,90",
-    precoOld: "R$99,90",
-    desconto: "-40%",
-    loja: "amazon",
-    link: "https://amzn.to/4esgWw9"
-  },
+
   {
     id: 5,
     nome: "Kit Skincare Coreano 5 Passos",
@@ -72,19 +35,7 @@ const produtos = [
     loja: "ml",
     link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
   },
-  {
-    id: 6,
-    nome: "Máscara Capilar Hidratação Intensa 500g",
-    categoria: "beleza",
-    desc: "Máscara de nutrição profunda para cabelos secos e danificados. Com keratina e óleo de argan. Resultado de salão em casa.",
-    emoji: "💆",
-    img: "",
-    preco: "R$44,90",
-    precoOld: "R$74,90",
-    desconto: "-40%",
-    loja: "amazon",
-    link: "https://amzn.to/4esgWw9"
-  },
+
 
   // ── PET ──────────────────────────────────────────────────
   {
@@ -100,26 +51,13 @@ const produtos = [
     loja: "ml",
     link: "https://www.mercadolivre.com.br/social/gpa_afiliadobr"
   },
-  {
-    id: 8,
-    nome: "Kit Petisco Natural para Cães 3 Sabores",
-    categoria: "pet",
-    desc: "Snacks saudáveis sem corantes ou conservantes. Frango, carne e fígado. Ideal para adestramento e recompensa.",
-    emoji: "🦴",
-    img: "",
-    preco: "R$34,90",
-    precoOld: "R$54,90",
-    desconto: "-36%",
-    loja: "amazon",
-    link: "https://amzn.to/4esgWw9"
-  }
+
 ];
 // ============================================================
 
 const lojaLabel = {
   ml:     { label: "Mercado Livre", class: "btn-ml tag-ml modal-ml" },
-  shopee: { label: "Shopee",        class: "btn-shopee tag-shopee" },
-  amazon: { label: "Amazon",        class: "btn-amazon tag-amazon" }
+  shopee: { label: "Shopee",        class: "btn-shopee tag-shopee" }
 };
 
 let currentCat = "todos";
