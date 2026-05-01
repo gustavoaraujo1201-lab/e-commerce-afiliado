@@ -13,16 +13,20 @@ const MATT_WORD = "gustavoaraujo12";
 // desc     → descrição curta para o card — OPCIONAL
 //            Se não preencher, usa o título do anúncio do ML.
 //
-// ✅ Com descrição manual (mais persuasiva):
-//   { mlbId: "MLB123", categoria: "fitness", desc: "Kit com 5 faixas de resistência. Treino completo em casa!" },
+// ⚠️  IMPORTANTE: use sempre o ID que aparece em &wid= na URL do produto,
+//     NÃO o que aparece em /p/MLB...
 //
-// ✅ Sem descrição (usa o título do ML automaticamente):
-//   { mlbId: "MLB123", categoria: "fitness" },
+// ✅ Com descrição manual:
+//   { mlbId: "MLB3912996147", categoria: "beleza", desc: "Kit skincare completo da Principia." },
+//
+// ✅ Sem descrição (usa o título do ML):
+//   { mlbId: "MLB3912996147", categoria: "beleza" },
 //
 const PRODUTOS_CURADOS = [
-  { mlbId: "MLB65929649", categoria: "fitness", desc: "Produto selecionado com qualidade garantida e o melhor preço do Mercado Livre." },
   { mlbId: "MLB3912996147", categoria: "beleza", desc: "" },
-  // { mlbId: "MLB3333333333", categoria: "pet",     desc: "" },
+  // Adicione mais produtos abaixo:
+  // { mlbId: "MLB0000000000", categoria: "fitness", desc: "" },
+  // { mlbId: "MLB0000000000", categoria: "pet",     desc: "" },
 ];
 // ──────────────────────────────────────────────────────────
 
@@ -70,7 +74,6 @@ export default async function handler(req, res) {
           id:           d.id,
           nome:         d.title,
           categoria,
-          // Se desc foi preenchida manualmente usa ela, senão usa o título do ML
           desc:         (desc && desc.trim()) ? desc.trim() : d.title,
           emoji:        catEmoji(categoria),
           img,
